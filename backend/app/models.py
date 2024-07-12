@@ -41,7 +41,7 @@ class Document(db.Model):
     file_hash = db.Column(db.String(64), index=True, unique=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    blockchain_tx_hash = db.Column(db.String(66))  # For future blockchain integration
+    blockchain_tx_hash = db.Column(db.String(66))  # New field for blockchain transaction hash
 
     @staticmethod
     def generate_hash(file_content):

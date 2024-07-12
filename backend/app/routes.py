@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from werkzeug.utils import secure_filename
 from flask_mail import Message
 from app.errors import bad_request
+from app.blockchain import add_to_blockchain, verify_on_blockchain
 import os
 
 bp = Blueprint('main', __name__)
@@ -88,14 +89,17 @@ def upload_document():
         with open(file_path, 'wb') as f:
             f.write(file_content)
         
-        new_document = Document(filename=filename, file_hash=file_hash, user_id=get_jwt_identity())
+        blockchain_tx_hash = add_to_blockchain(file_hash)
+        
+        new_document = Document(filename=filename, file_hash=file_hash, user_id=get_jwt_identity(), blockchain_tx_hash=blockchain_tx_hash)
         db.session.add(new_document)
         db.session.commit()
         
         return jsonify({
-            "message": "File successfully uploaded",
+            "message": "File successfully uploaded and added to blockchain" if blockchain_tx_hash else "File uploaded but blockchain addition failed",
             "filename": filename,
-            "document_id": new_document.id
+            "document_id": new_document.id,
+            "blockchain_tx_hash": blockchain_tx_hash
         }), 201
     return jsonify({"error": "File type not allowed"}), 400
 
@@ -127,16 +131,18 @@ def verify_document(document_id):
         file_content = f.read()
     
     calculated_hash = Document.generate_hash(file_content)
-    is_valid = calculated_hash == document.file_hash
+    is_valid_local = calculated_hash == document.file_hash
+    is_valid_blockchain = verify_on_blockchain(document.file_hash)
     
     return jsonify({
         "document_id": document.id,
         "filename": document.filename,
-        "is_valid": is_valid,
+        "is_valid_local": is_valid_local,
+        "is_valid_blockchain": is_valid_blockchain,
         "stored_hash": document.file_hash,
-        "calculated_hash": calculated_hash
+        "calculated_hash": calculated_hash,
+        "blockchain_tx_hash": document.blockchain_tx_hash
     }), 200
-
 def send_verification_email(user):
     token = user.email_verification_token
     msg = Message('Verify Your Email',

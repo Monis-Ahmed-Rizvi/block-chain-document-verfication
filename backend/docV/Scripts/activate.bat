@@ -24,7 +24,8 @@ set PYTHONHOME=
 if defined _OLD_VIRTUAL_PATH set PATH=%_OLD_VIRTUAL_PATH%
 if not defined _OLD_VIRTUAL_PATH set _OLD_VIRTUAL_PATH=%PATH%
 
-set PATH=%VIRTUAL_ENV%\Scripts;%PATH%
+rem Add npm to the PATH
+set PATH=C:\Program Files\nodejs;%VIRTUAL_ENV%\Scripts;%PATH%
 
 :END
 if defined _OLD_CODEPAGE (

@@ -18,6 +18,8 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    BLOCKCHAIN_PROVIDER = 'http://localhost:8545'
+    CONTRACT_ADDRESS = os.environ.get('CONTRACT_ADDRESS')
 
 class DevelopmentConfig(Config):
     DEBUG = True
