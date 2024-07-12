@@ -1,0 +1,20 @@
+Cloud Migration Simulator:
+Create a small application that simulates migrating a traditional on-premises application to Oracle Cloud. This could showcase your understanding of cloud concepts and Oracle's infrastructure.
+AI-powered Customer Support Chatbot:
+Develop a basic chatbot using Python and AI/ML libraries that can answer common Oracle product support questions. This demonstrates your interest in AI and customer service.
+Blockchain-based Asset Tracking System:
+Build a simple blockchain application for tracking assets or transactions. This could be done using Oracle's blockchain platform or another open-source solution.
+DevOps Pipeline for Oracle Cloud:
+Set up a CI/CD pipeline using tools like Jenkins or GitLab CI, demonstrating how to deploy applications to Oracle Cloud Infrastructure.
+Security Analysis Tool:
+Create a tool that performs basic security checks on cloud configurations, showing your interest in cloud security practices.
+Terraform Scripts for Oracle Cloud:
+Develop a set of Terraform scripts that automate the deployment of a multi-tier application on Oracle Cloud, showcasing your infrastructure-as-code skills.
+Oracle Product Feature Comparison Web App:
+Build a web application that compares features of different Oracle products, demonstrating your knowledge of Oracle's offerings and web development skills.
+Python-based Log Analyzer:
+Create a Python script that analyzes log files from Oracle products, extracting useful insights or identifying potential issues.
+Customer Success Dashboard:
+Develop a dashboard that visualizes key performance indicators for customer success, using dummy data to simulate real customer scenarios.
+Oracle Cloud Cost Optimizer:
+Build a tool that analyzes Oracle Cloud usage and suggests optimizations for cost savings, demonstrating your understanding of cloud economics.
