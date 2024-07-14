@@ -51,22 +51,29 @@ def verify_email(token):
     return jsonify({"error": "Invalid or expired token"}), 400
 
 @bp.route('/login', methods=['POST'])
-@limiter.limit("5 per minute")
+@limiter.limit("20 per minute")  # Increased rate limit for testing
 def login():
     data = request.get_json()
     
-    if not data or not data.get('username') or not data.get('password'):
-        return bad_request('Missing username or password')
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    
+    if not data.get('username') or not data.get('password'):
+        return jsonify({"error": "Missing username or password"}), 400
     
     user = User.query.filter_by(username=data['username']).first()
     
-    if user and user.check_password(data['password']):
-        if not user.email_verified:
-            return bad_request('Please verify your email before logging in')
-        access_token = create_access_token(identity=user.id)
-        return jsonify({"access_token": access_token}), 200
+    if not user:
+        return jsonify({"error": "User not found"}), 404
     
-    return bad_request('Invalid username or password')
+    if not user.check_password(data['password']):
+        return jsonify({"error": "Incorrect password"}), 401
+    
+    if not user.email_verified:
+        return jsonify({"error": "Please verify your email before logging in"}), 403
+    
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"access_token": access_token}), 200
 
 @bp.route('/upload', methods=['POST'])
 @jwt_required()
